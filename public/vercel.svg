@@ -1,1 +1,18 @@
-<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1155 1000"><path d="m577.3 0 577.4 1000H0z" fill="#fff"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="100" fill="url(#g1)"/>
+  
+  {/* Progress Ring Background */}
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#ffffff" stroke-width="25" opacity="0.2"/>
+  
+  {/* Progress Ring Stroke */}
+  <path d="M256 76 a180 180 0 0 1 180 180" fill="none" stroke="#ffffff" stroke-width="25" stroke-linecap="round"/>
+  
+  {/* Flame Icon */}
+  <path fill="#ffffff" d="M323.5,231c-3.1-40.4-19.1-71.1-44.5-98.1c-13.6-14.7-27.2-24.3-43-32.9c-2.4,36.5-13.6,58.3-29.2,85.6c-17.7,31-29.7,59.3-29.7,92.1c0,10.2,2.1,20.4,5,30.3c6,20.7,18.9,39.3,37.5,52.2c19.2,13.2,43.2,19.3,66.3,16.5c24.6-3,46.2-14.1,62.1-32.1C380,305.1,357.7,267.2,323.5,231z"/>
+</svg>
