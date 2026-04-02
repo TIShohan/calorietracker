@@ -1,4 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#3b82f6"/>
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="250" fill="#ffffff" font-family="sans-serif" font-weight="bold">NM</text>
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  {/* The Blue Background */}
+  <rect width="512" height="512" rx="100" fill="url(#bgGrad)"/>
+  
+  {/* The Clean Progress Ring (Standalone) */}
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#ffffff" stroke-width="30" opacity="0.2"/>
+  <path d="M256 76 a180 180 0 0 1 127.3 307.3" fill="none" stroke="#ffffff" stroke-width="30" stroke-linecap="round"/>
 </svg>
