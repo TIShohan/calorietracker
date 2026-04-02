@@ -217,8 +217,9 @@
 }
 
 @media (max-width: 600px) {
-  .form { flex-direction: column; }
-  .button { width: 100%; justify-content: center; padding: 0.9rem; }
+  .form { flex-direction: column; gap: 0.6rem; }
+  .input { padding: 1.1rem 1.2rem; font-size: 1.1rem; }
+  .button { width: 100%; justify-content: center; padding: 1.1rem; font-size: 1.1rem; height: 3.5rem; }
 }
 
 .input {
@@ -514,6 +515,14 @@
 }
 
 .waterButton:hover { background: rgba(59, 130, 246, 0.15); }
+
+@media (max-width: 600px) {
+  .waterSection { padding: 0.2rem 0; }
+  .waterCount { font-size: 1.4rem; }
+  .waterProgressBar { margin: 0.4rem 0 0.2rem; }
+  .waterControls { gap: 1.2rem; margin-top: 0.5rem; }
+  .waterButton { width: 36px; height: 36px; font-size: 1.1rem; }
+}
 
 /* ── Chart ── */
 .chartSection {

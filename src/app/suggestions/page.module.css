@@ -181,6 +181,7 @@
 @media (max-width: 600px) {
   .title { font-size: 1.5rem; }
   .card { height: 80vh; padding: 1rem; }
-  .setupRow { flex-direction: column; }
-  .msgInput { padding: 0.8rem 1.2rem; }
+  .setupRow { flex-direction: column; margin-bottom: 1rem; gap: 0.8rem; }
+  .msgInput { padding: 1rem 1.2rem; font-size: 1.1rem; }
+  .sendBtn { width: 54px; height: 54px; font-size: 1.4rem; }
 }
