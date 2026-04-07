@@ -33,7 +33,22 @@ body {
   font-family: var(--font-main);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  /* App-specific mobile settings */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
 }
+
+/* Ensure content is not hidden by fixed bottom nav on mobile */
+.main-content {
+  padding-bottom: 80px;
+}
+
+@media (min-width: 900px) {
+  .main-content { padding-bottom: 0px; }
+}
+
 
 button {
   font-family: var(--font-main);

@@ -26,10 +26,18 @@ export const metadata = {
   },
 };
 
+import BottomNav from "@/components/BottomNav";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body className="antialiased">
+        <main className="main-content">
+          {children}
+        </main>
+        <BottomNav />
+      </body>
     </html>
   );
 }
+

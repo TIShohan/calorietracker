@@ -731,8 +731,48 @@
   gap: 0.8rem;
 }
 
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 @media (max-width: 600px) {
-  .macroRowPrimary, .macroRowSecondary {
-    grid-template-columns: repeat(2, 1fr);
+  .titleArea {
+    gap: 0.5rem;
   }
 }
+
+@media (max-width: 600px) {
+  .macroRowPrimary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .macroRowSecondary {
+    grid-template-columns: repeat(3, 1fr); /* Force 3 columns for even look */
+    gap: 0.5rem;
+  }
+  .macroItem {
+    padding: 0.5rem;
+  }
+  .macroValue {
+    font-size: 1.1rem;
+  }
+  .macroLabel {
+    font-size: 0.6rem;
+  }
+}
+
+.headerRight {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .mobileHide {
+    display: none !important;
+  }
+}
+
+
+

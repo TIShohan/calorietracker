@@ -68,7 +68,7 @@ export default function SuggestionsPage() {
 
       <header className={styles.header}>
         <div className={styles.title}>🏃 AI Coach</div>
-        <a href="/" className={styles.backBtn}>🏠 Dashboard</a>
+        <a href="/" className={`${styles.backBtn} ${styles.mobileHide}`}>🏠 Dashboard</a>
       </header>
 
 

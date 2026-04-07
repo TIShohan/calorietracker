@@ -185,3 +185,10 @@
   .msgInput { padding: 1rem 1.2rem; font-size: 1.1rem; }
   .sendBtn { width: 54px; height: 54px; font-size: 1.4rem; }
 }
+
+@media (max-width: 900px) {
+  .mobileHide {
+    display: none !important;
+  }
+}
+
