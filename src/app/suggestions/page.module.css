@@ -3,7 +3,8 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 80px; /* Space for bottom nav */
+  bottom: 80px;
+  /* Space for bottom nav */
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem 1.5rem 0.5rem;
@@ -50,8 +51,10 @@
   padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  flex: 1; /* Grow to fill space */
-  min-height: 0; /* Important for flex child to be able to shrink/scroll */
+  flex: 1;
+  /* Grow to fill space */
+  min-height: 0;
+  /* Important for flex child to be able to shrink/scroll */
   margin-bottom: 1rem;
 }
 
@@ -136,7 +139,7 @@
   font-size: 0.95rem;
   line-height: 1.5;
   white-space: pre-wrap;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .userMsg .msgContent {
@@ -217,43 +220,66 @@
   animation: bounce 1.4s infinite ease-in-out both;
 }
 
-.typingIndicator span:nth-child(1) { animation-delay: -0.32s; }
-.typingIndicator span:nth-child(2) { animation-delay: -0.16s; }
+.typingIndicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typingIndicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
 
 @keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
 }
 
 .inputArea {
   display: flex;
-  gap: 0.8rem;
-  padding-top: 1rem;
-  align-items: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1.2px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 0.15rem 0.15rem 0.15rem 1.1rem;
+  margin-top: auto;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.inputArea:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .msgInput {
   flex: 1;
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 0.75rem 1.2rem;
-  border-radius: 20px;
+  background: transparent;
+  border: none;
+  color: #1e293b;
+  padding: 0.4rem 0;
   outline: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   resize: none;
   overflow-y: auto;
-  line-height: 1.5;
-  min-height: 48px;
+  line-height: 1.4;
+  min-height: 24px;
   font-family: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .sendBtn {
   background: #3b82f6;
-  /* Premium Chat Blue */
   color: white;
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   flex-shrink: 0;
   display: flex;
@@ -261,6 +287,7 @@
   justify-content: center;
   padding: 0;
   transition: all 0.2s;
+  border: none;
 }
 
 .sendBtn:hover:not(:disabled) {
@@ -269,7 +296,8 @@
 }
 
 .sendBtn:disabled {
-  opacity: 0.5;
+  background: #e2e8f0;
+  color: #94a3b8;
 }
 
 /* ── Toast ── */
