@@ -10,18 +10,15 @@ export default function BottomNav() {
   return (
     <nav className={styles.bottomNav}>
       <Link href="/" className={pathname === '/' ? styles.active : styles.navLink}>
-        <span className={styles.icon}>🏠</span>
-        <span className={styles.label}>Home</span>
+        <span className={styles.label}>DASHBOARD</span>
       </Link>
       
       <Link href="/suggestions" className={pathname === '/suggestions' ? styles.active : styles.navLink}>
-        <span className={styles.icon}>🏃</span>
-        <span className={styles.label}>Coach</span>
+        <span className={styles.label}>COACH</span>
       </Link>
       
       <Link href="/settings" className={pathname === '/settings' ? styles.active : styles.navLink}>
-        <span className={styles.icon}>⚙️</span>
-        <span className={styles.label}>Settings</span>
+        <span className={styles.label}>PROFILE</span>
       </Link>
     </nav>
   );
