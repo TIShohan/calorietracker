@@ -25,7 +25,11 @@
 6.  **Grams-Level Precision** — AI is instructed to provide all food quantities in grams (g) for maximum tracking accuracy.
 7.  **Native Look & Feel** — Disabled "web-like" behaviors (text selection, tap highlights) to ensure a high-end, native app sensation on touch devices.
 8.  **Professional Input System** — Upgraded from single-line fields to auto-expanding textareas with `useLayoutEffect` for seamless multi-line support without horizontal scrolling.
-9.  **Action-Oriented Dashboard** — Redesigned input area with a prominent "Track" button positioned below the input for a cleaner, vertical mobile-first hierarchy.
+9.  **Viewport-Locked AI Coach** — A fixed-height chat interface that fits the screen perfectly, disabling full-page scrolling and keeping the input/header stable for a true "Native App" feel.
+10. **Intelligent BMI System** — Integrated a real-time BMI calculator with a professional color-coded (Blue–Green–Red–Red) slider for instant health status feedback.
+11. **Monthly Goal Architecture** — Switched target timeframe from weeks to months for more professional, long-term health planning.
+12. **Concise Profile Grid** — Optimized the settings layout to use a compact grid, maximizing screen space and reducing horizontal data entry friction.
+13. **Native Look & Feel** — Disabled "web-like" behaviors (text selection, tap highlights) to ensure a high-end, native app sensation on touch devices.
 
 ## File Structure
 

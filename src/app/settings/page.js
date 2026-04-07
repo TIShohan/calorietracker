@@ -17,7 +17,7 @@ function SettingsContent() {
     activity: 1.55,
     goalType: 'maintain',
     targetWeight: 70,
-    targetWeeks: 12,
+    targetMonths: 3,
   });
 
   const searchParams = useSearchParams();
@@ -37,6 +37,26 @@ function SettingsContent() {
     setWaterGoal(getWaterGoal());
   }, []);
 
+  const [bmi, setBmi] = useState(0);
+
+  useEffect(() => {
+    const { weight, heightFt, heightIn } = profile;
+    if (weight && heightFt) {
+      const heightInMeters = ((heightFt * 12) + (heightIn || 0)) * 0.0254;
+      setBmi(heightInMeters > 0 ? (weight / (heightInMeters * heightInMeters)).toFixed(1) : 0);
+    }
+  }, [profile]);
+
+  const getBmiCategory = () => {
+    const b = parseFloat(bmi);
+    if (b < 18.5) return { name: 'Underweight', color: '#60a5fa' };
+    if (b < 25) return { name: 'Normal Weight', color: '#34d399' };
+    if (b < 30) return { name: 'Overweight', color: '#f87171' };
+    return { name: 'Obese', color: '#ef4444' };
+  };
+
+  const bmiInfo = getBmiCategory();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile(prev => ({
@@ -46,7 +66,7 @@ function SettingsContent() {
   };
 
   const calculateGoal = () => {
-    const { age, gender, heightFt, heightIn, weight, activity, goalType, targetWeight, targetWeeks } = profile;
+    const { age, gender, heightFt, heightIn, weight, activity, goalType, targetWeight, targetMonths } = profile;
 
     // Height in cm
     const heightCm = ((heightFt * 12) + heightIn) * 2.54;
@@ -63,7 +83,7 @@ function SettingsContent() {
     if (goalType !== 'maintain') {
       const weightDiff = Math.abs(weight - targetWeight);
       const totalKcalRequired = weightDiff * 7700; // ~7700 kcal per kg of fat
-      const dailyChangeInfo = totalKcalRequired / (targetWeeks * 7);
+      const dailyChangeInfo = totalKcalRequired / (targetMonths * 30.5);
 
       if (goalType === 'lose') {
         dailyGoal = tdee - dailyChangeInfo;
@@ -127,6 +147,20 @@ function SettingsContent() {
           </div>
         </div>
 
+        <div className={styles.bmiBox}>
+          <div className={styles.bmiTitle}>Your BMI Status</div>
+          <div className={styles.bmiValue}>{bmi}</div>
+          <div className={styles.bmiCategory} style={{ color: bmiInfo.color }}>{bmiInfo.name}</div>
+          <div className={styles.bmiBar}>
+            <div className={styles.bmiPointer} style={{ left: `${Math.min(100, Math.max(0, (bmi / 40) * 100))}%` }}></div>
+          </div>
+          <div className={styles.bmiLabels}>
+            <span>Underweight</span>
+            <span>Normal</span>
+            <span style={{ marginLeft: '10px' }}>Over/Obese</span>
+          </div>
+        </div>
+
         <div className={styles.sectionTitle}>Lifestyle & Goals</div>
         <div className={styles.grid}>
           <div className={styles.field}>
@@ -152,12 +186,12 @@ function SettingsContent() {
         {profile.goalType !== 'maintain' && (
           <div className={styles.grid} style={{ marginTop: '1rem' }}>
             <div className={styles.field}>
-              <label>Target Weight (kg)</label>
+              <label>Target (kg)</label>
               <input type="number" name="targetWeight" value={profile.targetWeight} onChange={handleChange} />
             </div>
             <div className={styles.field}>
-              <label>Target Timeframe (Weeks)</label>
-              <input type="number" name="targetWeeks" value={profile.targetWeeks} onChange={handleChange} />
+              <label>Months</label>
+              <input type="number" name="targetMonths" value={profile.targetMonths} onChange={handleChange} />
             </div>
           </div>
         )}
