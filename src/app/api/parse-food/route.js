@@ -1,19 +1,21 @@
 import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
 
-const SYSTEM_PROMPT = `You are a precise nutritional analysis AI. Your ONLY job is to parse food descriptions and return structured JSON.
+const SYSTEM_PROMPT = `You are a precise health analysis AI. Your ONLY job is to parse food OR exercise descriptions and return structured JSON.
 
 Rules:
 1. Respond with a JSON object containing a single key "entries" that holds an array.
-2. Each element in the array represents ONE distinct food item.
-3. If multiple items are mentioned, list them separately in the array.
-4. Use reasonable average nutrition estimates based on typical serving sizes.
-5. All numeric values must be integers (round to nearest whole number).
+2. Each element MUST have a "type" field: either "food" or "exercise".
+3. For "food": include "food_item", "calories" (positive), "protein", "fat", "carbs".
+4. For "exercise": include "food_item" (name of activity), "calories" (approximate burned, positive integer!), and 0 for macros.
+5. If multiple items/exercises are mentioned, list them separately in the array.
+6. All numeric values must be integers.
 
 JSON schema (strictly follow this):
 {
   "entries": [
     {
+      "type": "food" | "exercise",
       "food_item": "string",
       "calories": integer,
       "protein": integer,

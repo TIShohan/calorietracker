@@ -109,12 +109,16 @@ export default function Home() {
   }, [viewDate]);
 
   // Macros
-  const totalCalories = log.reduce((s, i) => s + (i.calories || 0), 0);
+  // Macros & Exercise
+  const totalConsumed = log.filter(i => i.type !== 'exercise').reduce((s, i) => s + (i.calories || 0), 0);
+  const totalBurned = log.filter(i => i.type === 'exercise').reduce((s, i) => s + (i.calories || 0), 0);
+  
   const totalProtein = log.reduce((s, i) => s + (i.protein || 0), 0);
   const totalCarbs = log.reduce((s, i) => s + (i.carbs || 0), 0);
   const totalFat = log.reduce((s, i) => s + (i.fat || 0), 0);
-  const remaining = goal - totalCalories;
-  const progressPct = Math.min((totalCalories / goal) * 100, 100);
+  
+  const remaining = goal - totalConsumed + totalBurned;
+  const progressPct = Math.min((totalConsumed / (goal + totalBurned)) * 100, 100);
 
   // Pie chart data
   const pieData = [
@@ -297,8 +301,16 @@ export default function Home() {
           <div className={styles.card} style={{ marginBottom: '2rem' }}>
             <div className={styles.macroGrid}>
               <div className={styles.macroItem}>
-                <div className={styles.macroLabel}>Calories</div>
-                <div className={styles.macroValue} style={{ color: '#60a5fa' }}>{totalCalories}</div>
+                <div className={styles.macroLabel}>Consumed</div>
+                <div className={styles.macroValue} style={{ color: '#60a5fa' }}>{totalConsumed}</div>
+              </div>
+              <div className={styles.macroItem}>
+                <div className={styles.macroLabel}>Burned</div>
+                <div className={styles.macroValue} style={{ color: '#f87171' }}>{totalBurned}</div>
+              </div>
+              <div className={styles.macroItem}>
+                <div className={styles.macroLabel}>Remaining</div>
+                <div className={styles.macroValue} style={{ color: '#34d399' }}>{remaining}</div>
               </div>
               <div className={styles.macroItem}>
                 <div className={styles.macroLabel}>Protein</div>
@@ -321,7 +333,7 @@ export default function Home() {
               />
             </div>
             <div className={styles.goalText}>
-              <span>{totalCalories} kcal consumed</span>
+              <span>{totalConsumed} kcal consumed</span>
               <span className={remaining < 0 ? styles.overGoal : styles.underGoal}>
                 {remaining >= 0 ? `${remaining} kcal remaining` : `${Math.abs(remaining)} kcal over goal`}
               </span>
@@ -418,12 +430,21 @@ export default function Home() {
                           </div>
                         ) : (
                           <div className={styles.logItem}>
-                            <div className={styles.logItemName}>{item.food_item}</div>
+                            <div className={styles.logItemName}>
+                              {item.type === 'exercise' ? '🏃 ' : ''}
+                              {item.food_item}
+                            </div>
                             <div className={styles.logItemStats}>
-                              <span style={{ color: '#60a5fa' }}>{item.calories} kcal</span>
-                              <span style={{ color: '#f472b6' }}>P: {item.protein}g</span>
-                              <span style={{ color: '#fbbf24' }}>C: {item.carbs}g</span>
-                              <span style={{ color: '#34d399' }}>F: {item.fat}g</span>
+                              <span style={{ color: item.type === 'exercise' ? '#f87171' : '#60a5fa' }}>
+                                {item.type === 'exercise' ? '-' : ''}{item.calories} kcal
+                              </span>
+                              {item.type !== 'exercise' && (
+                                <>
+                                  <span style={{ color: '#f472b6' }}>P: {item.protein}g</span>
+                                  <span style={{ color: '#fbbf24' }}>C: {item.carbs}g</span>
+                                  <span style={{ color: '#34d399' }}>F: {item.fat}g</span>
+                                </>
+                              )}
                               <button onClick={() => toggleFavorite(item)} className={styles.editBtn} title="Toggle Favorite">
                                 {favorites.find(f => f.food_item === item.food_item) ? '⭐' : '☆'}
                               </button>
