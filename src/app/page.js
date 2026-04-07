@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart,
@@ -61,6 +61,7 @@ export default function Home() {
   const [streak, setStreak] = useState(0);
   const [weekly, setWeekly] = useState([]);
   const [foodInput, setFoodInput] = useState('');
+  const textareaRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [favorites, setFavorites] = useState([]);
@@ -107,6 +108,20 @@ export default function Home() {
     setWeekly(getWeeklyData().reverse());
     setFavorites(getFavorites());
   }, [viewDate]);
+
+  useLayoutEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = (textareaRef.current.scrollHeight + 2) + 'px';
+    }
+  }, [foodInput]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleLogFood(e);
+    }
+  };
 
   // Macros
   // Macros & Exercise
@@ -366,12 +381,13 @@ export default function Home() {
           {isToday && (
             <div className={styles.card} style={{ marginBottom: '2rem' }}>
               <form className={styles.form} onSubmit={handleLogFood}>
-                <input
-                  type="text"
+                <textarea
+                  ref={textareaRef}
                   className={styles.input}
                   placeholder="e.g., I had 2 scrambled eggs, a toast and a coffee"
                   value={foodInput}
                   onChange={(e) => setFoodInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   disabled={loading}
                 />
                 <button type="submit" className={styles.button} disabled={loading || !foodInput.trim()}>

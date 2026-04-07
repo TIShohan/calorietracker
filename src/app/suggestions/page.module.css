@@ -83,7 +83,8 @@
   gap: 1rem;
 }
 
-.userMsg, .aiMsg {
+.userMsg,
+.aiMsg {
   max-width: 80%;
   display: flex;
   flex-direction: column;
@@ -130,6 +131,7 @@
   display: flex;
   gap: 0.8rem;
   padding-top: 1rem;
+  align-items: flex-end;
 }
 
 .msgInput {
@@ -137,20 +139,35 @@
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   color: var(--text-main);
-  padding: 1rem 1.5rem;
-  border-radius: 30px;
+  padding: 0.75rem 1.2rem;
+  border-radius: 20px;
   outline: none;
   font-size: 1rem;
+  resize: none;
+  overflow-y: auto;
+  line-height: 1.5;
+  min-height: 48px;
+  font-family: inherit;
 }
 
 .sendBtn {
-  background: var(--primary-color);
+  background: #3b82f6;
+  /* Premium Chat Blue */
   color: white;
   width: 48px;
+  height: 48px;
   border-radius: 50%;
-  font-size: 1.2rem;
-  display: grid;
-  place-items: center;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.sendBtn:hover:not(:disabled) {
+  background: #2563eb;
+  transform: scale(1.05);
 }
 
 .sendBtn:disabled {
@@ -170,20 +187,53 @@
   animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.success { background: #10b981; }
-.error { background: #ef4444; }
+.success {
+  background: #10b981;
+}
+
+.error {
+  background: #ef4444;
+}
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 600px) {
-  .title { font-size: 1.5rem; }
-  .card { height: 80vh; padding: 1rem; }
-  .setupRow { flex-direction: column; margin-bottom: 1rem; gap: 0.8rem; }
-  .msgInput { padding: 1rem 1.2rem; font-size: 1.1rem; }
-  .sendBtn { width: 54px; height: 54px; font-size: 1.4rem; }
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    height: 80vh;
+    padding: 1rem;
+  }
+
+  .setupRow {
+    flex-direction: column;
+    margin-bottom: 1rem;
+    gap: 0.8rem;
+  }
+
+  .msgInput {
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+    min-height: 54px;
+    border-radius: 18px;
+  }
+
+  .sendBtn {
+    width: 54px;
+    height: 54px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -191,4 +241,3 @@
     display: none !important;
   }
 }
-

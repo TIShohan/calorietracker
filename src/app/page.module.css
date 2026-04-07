@@ -272,25 +272,28 @@
 .form {
   display: flex;
   gap: 0.8rem;
+  align-items: flex-start;
 }
 
 @media (max-width: 600px) {
   .form {
     flex-direction: column;
     gap: 0.6rem;
+    align-items: stretch;
   }
 
   .input {
-    padding: 1.1rem 1.2rem;
+    padding: 1rem 1.2rem;
     font-size: 1.1rem;
+    min-height: 56px;
   }
 
   .button {
     width: 100%;
     justify-content: center;
-    padding: 1.1rem;
+    padding: 0.8rem;
     font-size: 1.1rem;
-    height: 3.5rem;
+    height: 56px;
   }
 }
 
@@ -299,11 +302,16 @@
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   color: var(--text-main);
-  padding: 0.9rem 1.1rem;
-  border-radius: 10px;
+  padding: 0.8rem 1.1rem;
+  border-radius: 12px;
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.5;
+  min-height: 48px;
+  font-family: inherit;
 }
 
 .input:focus {
@@ -314,14 +322,17 @@
 .button {
   background: var(--primary-color);
   color: var(--button-text);
-  padding: 0 1.2rem;
+  padding: 0 1.5rem;
   font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   white-space: nowrap;
+  height: 48px;
+  cursor: pointer;
+  border: none;
 }
 
 .button:hover:not(:disabled) {

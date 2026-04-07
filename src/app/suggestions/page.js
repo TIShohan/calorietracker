@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import styles from './page.module.css';
 import { getLogForDate, getCalorieGoal } from '../../lib/storage';
 
@@ -17,6 +17,7 @@ export default function SuggestionsPage() {
     { role: 'ai', text: '🏃 Hi! I am your AI Coach. Ask me about diet, at-home exercises, budget BDT for meals or healthy meals idea in Bangladesh!' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  const textareaRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
@@ -44,7 +45,7 @@ export default function SuggestionsPage() {
       const res = await fetch('/api/suggest-meal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           message: userMessage,
           history: messages.slice(-6), // Memory of last 6 messages
           goal: goal // Personalized context
@@ -59,6 +60,20 @@ export default function SuggestionsPage() {
       showToast(err.message, 'error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight + 2, 150) + 'px';
+    }
+  }, [inputMessage]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage(e);
     }
   };
 
@@ -86,16 +101,19 @@ export default function SuggestionsPage() {
         </div>
 
         <form onSubmit={handleSendMessage} className={styles.inputArea}>
-          <input
-            type="text"
+          <textarea
+            ref={textareaRef}
             placeholder="Ask your mentor anything..."
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
             className={styles.msgInput}
             disabled={loading}
           />
           <button type="submit" className={styles.sendBtn} disabled={loading || !inputMessage.trim()}>
-            {loading ? '...' : '✈️'}
+            {loading ? '...' : (
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            )}
           </button>
         </form>
       </div>
