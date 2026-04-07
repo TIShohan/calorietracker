@@ -274,8 +274,8 @@ export default function Home() {
         <div className={styles.title}>✨ NutriMind</div>
         <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
           <div className={styles.streakBadge}>🔥 {streak} Day Streak</div>
-          <a href="/suggestions" style={{ color: '#3b82f6', textDecoration: 'none', background: 'rgba(59, 130, 246, 0.1)', padding: '0.4rem 1rem', borderRadius: '20px', fontSize: '0.9rem', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
-            💡 Suggest
+          <a href="/suggestions" style={{ color: '#ef4444', textDecoration: 'none', background: 'rgba(239, 68, 68, 0.1)', padding: '0.4rem 1rem', borderRadius: '20px', fontSize: '0.9rem', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+            🏃 Coach
           </a>
           <a href="/settings" style={{ color: 'var(--text-muted)', textDecoration: 'none', background: 'var(--surface-color)', padding: '0.4rem 1rem', borderRadius: '20px', fontSize: '0.9rem', border: '1px solid var(--border-color)' }}>
             ⚙️ Settings

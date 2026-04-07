@@ -14,48 +14,40 @@ const Toast = ({ message, type = 'success', onDone }) => {
 
 export default function SuggestionsPage() {
   const [messages, setMessages] = useState([
-    { role: 'ai', text: '👋 Hi! I can help you find meals in Bangladesh within your budget. How much Taka (BDT) do you want to spend?' }
+    { role: 'ai', text: '🏃 Hi! I am your AI Coach. Ask me about diet, at-home exercises, budget BDT for meals or healthy meals idea in Bangladesh!' }
   ]);
-  const [budget, setBudget] = useState('500');
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
-  
+
   const scrollRef = useRef(null);
 
   useEffect(() => {
     if (scrollRef.current) {
-        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
 
   const showToast = (msg, type = 'success') => setToast({ message: msg, type });
 
-  const getRemainingKcal = () => {
-    const today = new Date().toISOString().split('T')[0];
-    const log = getLogForDate(today);
-    const goal = getCalorieGoal();
-    const total = log.reduce((sum, item) => sum + (item.calories || 0), 0);
-    return goal - total;
-  };
-
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!inputMessage.trim() && !budget) return;
+    if (!inputMessage.trim()) return;
 
-    const userMessage = inputMessage.trim() || `My budget is ${budget} Taka. What can I eat?`;
+    const userMessage = inputMessage.trim();
     setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setInputMessage('');
     setLoading(true);
 
     try {
+      const goal = getCalorieGoal();
       const res = await fetch('/api/suggest-meal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          message: inputMessage.trim(), 
-          budget, 
-          remainingKcal: getRemainingKcal() 
+          message: userMessage,
+          history: messages.slice(-6), // Memory of last 6 messages
+          goal: goal // Personalized context
         })
       });
 
@@ -75,24 +67,12 @@ export default function SuggestionsPage() {
       {toast && <Toast message={toast.message} type={toast.type} onDone={() => setToast(null)} />}
 
       <header className={styles.header}>
-        <div className={styles.title}>💡 Meal Suggestions</div>
+        <div className={styles.title}>🏃 AI Coach</div>
         <a href="/" className={styles.backBtn}>🏠 Dashboard</a>
       </header>
 
-      <div className={styles.card}>
-        <div className={styles.setupRow}>
-          <div className={styles.setupItem}>
-            <label>Current Budget (BDT)</label>
-            <input 
-              type="number" 
-              value={budget} 
-              onChange={(e) => setBudget(e.target.value)} 
-              placeholder="e.g. 500" 
-              className={styles.inputField} 
-            />
-          </div>
-        </div>
 
+      <div className={styles.card}>
         <div className={styles.chatBox} ref={scrollRef}>
           {messages.map((m, i) => (
             <div key={i} className={m.role === 'ai' ? styles.aiMsg : styles.userMsg}>
@@ -106,15 +86,15 @@ export default function SuggestionsPage() {
         </div>
 
         <form onSubmit={handleSendMessage} className={styles.inputArea}>
-          <input 
-            type="text" 
-            placeholder="Ask anything... (e.g. 'I want fish for lunch')" 
+          <input
+            type="text"
+            placeholder="Ask your mentor anything..."
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             className={styles.msgInput}
             disabled={loading}
           />
-          <button type="submit" className={styles.sendBtn} disabled={loading || (!inputMessage.trim() && !budget)}>
+          <button type="submit" className={styles.sendBtn} disabled={loading || !inputMessage.trim()}>
             {loading ? '...' : '✈️'}
           </button>
         </form>

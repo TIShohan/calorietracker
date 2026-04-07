@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  allowedDevOrigins: ['192.168.0.69'],
+  // Allow all local network origins for mobile testing
+  devIndicators: {
+    appIsrStatus: false,
+  },
+  // Ensure the dev server accepts incoming requests on all interfaces
+  serverExternalPackages: ['groq-sdk'],
 };
 
 export default nextConfig;
+

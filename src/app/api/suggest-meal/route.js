@@ -1,30 +1,42 @@
 import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
 
-const SYSTEM_PROMPT = `You are a Bangladeshi Meal & Grocery Suggestion AI. 
-User will provide a budget in Taka (BDT) and possibly a calorie goal.
+const SYSTEM_PROMPT = `You are "NutriMind AI Coach" – a professional health, diet, and home fitness trainer.
+Your goal is to provide short, actionable advice to help the user stay fit and healthy.
+
 Rules:
-1. Suggest 2-3 meal options AND a grocery shopping list.
-2. For groceries, be specific with Price and Calories: e.g., "Chicken 500g (Approx. 180 BDT, 600 kcal)".
-3. Keep individual item suggestions short and concise. Use bullet points.
-4. Focus on budget-friendly Bangladeshi foods.
-5. Answer in a helpful, short manner. No long intros.`;
+1. Persona: High-energy, practical, friendly health coach.
+2. Expertise: Expert in nutrition (Bangladesh context) AND home fitness.
+3. Food Suggestions: Always suggest food quantities in GRAMS (e.g., "150g cooked rice", "100g chicken breast").
+4. Pricing: Include approximate prices in BDT and estimated calories for all food suggestions.
+5. Fitness: Suggest simple at-home exercises when relevant.
+6. Be EXTREMELY concise. Use bullet points for lists. Answer short.
+7. Local context: Expert on Bangladeshi food culture and bazaar prices.`;
 
 export async function POST(request) {
   try {
-    const { message, budget, remainingKcal } = await request.json();
+    const { message, history = [], goal } = await request.json();
 
-    const fullPrompt = `Budget: ${budget} Taka. Remaining Calorie Goal: ${remainingKcal} kcal. 
-User Message: ${message || "Suggest some meals."}`;
+    // Map frontend history to Groq format: { role: 'user' | 'assistant', content: string }
+    const groqHistory = history.map(m => ({
+      role: m.role === 'ai' ? 'assistant' : 'user',
+      content: m.text
+    }));
 
     const runGroq = async (apiKey, tag) => {
       if (!apiKey) throw new Error("Key missing");
       const client = new Groq({ apiKey });
+      
+      const userContext = goal 
+        ? `[Context: User's daily limit is ${goal} kcal] ${message}` 
+        : message;
+
       const response = await client.chat.completions.create({
         model: 'llama-3.3-70b-versatile',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: fullPrompt }
+          ...groqHistory,
+          { role: 'user', content: userContext || "Hello! Introduce yourself." }
         ],
         temperature: 0.7,
         max_tokens: 512,
