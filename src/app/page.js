@@ -64,6 +64,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [favorites, setFavorites] = useState([]);
+  const [showIosTip, setShowIosTip] = useState(false);
 
   // Date navigation
   const todayStr = new Date().toISOString().split('T')[0];
@@ -86,6 +87,13 @@ export default function Home() {
   useEffect(() => {
     if (!hasCompletedOnboarding()) {
       router.push('/settings?onboard=1');
+    }
+
+    // Detect iOS Tip
+    const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = !!(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches);
+    if (isIos && !isStandalone) {
+      setShowIosTip(true);
     }
   }, [router]);
 
@@ -247,6 +255,20 @@ export default function Home() {
   return (
     <div className={styles.container}>
       {toast && <Toast message={toast.message} type={toast.type} onDone={() => setToast(null)} />}
+
+      {showIosTip && (
+        <div className={styles.iosTip}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span style={{ fontWeight: 600 }}>💡 Add to Home Screen</span>
+            <button onClick={() => setShowIosTip(false)} className={styles.iosTipClose}>✕</button>
+          </div>
+          <div className={styles.iosTipContent}>
+            1. Open in <b>Safari</b><br/>
+            2. Tap <b>"Share"</b> (square icon at bottom)<br/>
+            3. Tap <b>"Add to Home Screen"</b>
+          </div>
+        </div>
+      )}
 
       <header className={styles.header}>
         <div className={styles.title}>✨ NutriMind</div>
