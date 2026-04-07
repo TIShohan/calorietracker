@@ -14,8 +14,15 @@ const Toast = ({ message, type = 'success', onDone }) => {
 
 export default function SuggestionsPage() {
   const [messages, setMessages] = useState([
-    { role: 'ai', text: '🏃 Hi! I am your AI Coach. Ask me about diet, at-home exercises, budget BDT for meals or healthy meals idea in Bangladesh!' }
+    { role: 'ai', text: 'Hi! I am your AI Coach. Ask me about diet, at-home exercises, budget BDT for meals or healthy meals idea in Bangladesh!', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
   ]);
+  const suggestions = [
+    "Low-carb breakfast?",
+    "Quick home workout",
+    "Budget meal BDT",
+    "How to lose 2kg?",
+    "Healthy lunch idea"
+  ];
   const [inputMessage, setInputMessage] = useState('');
   const textareaRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -36,7 +43,8 @@ export default function SuggestionsPage() {
     if (!inputMessage.trim()) return;
 
     const userMessage = inputMessage.trim();
-    setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    setMessages(prev => [...prev, { role: 'user', text: userMessage, time }]);
     setInputMessage('');
     setLoading(true);
 
@@ -55,7 +63,8 @@ export default function SuggestionsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      setMessages(prev => [...prev, { role: 'ai', text: data.text, provider: data.provider }]);
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      setMessages(prev => [...prev, { role: 'ai', text: data.text, provider: data.provider, time }]);
     } catch (err) {
       showToast(err.message, 'error');
     } finally {
@@ -91,14 +100,34 @@ export default function SuggestionsPage() {
         <div className={styles.chatBox} ref={scrollRef}>
           {messages.map((m, i) => (
             <div key={i} className={m.role === 'ai' ? styles.aiMsg : styles.userMsg}>
-              <div className={styles.msgContent}>
-                {m.text}
+              <div className={styles.msgWrapper}>
+                <div className={styles.msgContent}>
+                  {m.text}
+                </div>
+                <div className={styles.msgMeta}>
+                  {m.time} {m.provider && `• via ${m.provider}`}
+                </div>
               </div>
-              {m.provider && <div className={styles.providerTag}>via {m.provider}</div>}
             </div>
           ))}
-          {loading && <div className={styles.aiMsg}><div className={styles.msgContent}>Thinking...</div></div>}
+          {loading && (
+            <div className={styles.aiMsg}>
+              <div className={styles.typingIndicator}>
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          )}
         </div>
+
+        {messages.length < 3 && !loading && (
+          <div className={styles.suggestionRow}>
+            {suggestions.map((s, idx) => (
+              <button key={idx} onClick={() => { setInputMessage(s); textareaRef.current.focus(); }} className={styles.chip}>
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
 
         <form onSubmit={handleSendMessage} className={styles.inputArea}>
           <textarea
