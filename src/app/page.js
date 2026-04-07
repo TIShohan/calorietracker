@@ -299,30 +299,30 @@ export default function Home() {
         <div className={styles.mainCol}>
           {/* Macro Summary Card */}
           <div className={styles.card} style={{ marginBottom: '2rem' }}>
-            <div className={styles.macroGrid}>
-              <div className={styles.macroItem}>
-                <div className={styles.macroLabel}>Consumed</div>
-                <div className={styles.macroValue} style={{ color: '#60a5fa' }}>{totalConsumed}</div>
+            <div className={styles.macroSummarySection}>
+              <div className={styles.macroRowPrimary}>
+                <div className={styles.macroItem}>
+                  <div className={styles.macroLabel}>Consumed</div>
+                  <div className={styles.macroValue} style={{ color: '#60a5fa' }}>{totalConsumed}</div>
+                </div>
+                <div className={styles.macroItem}>
+                  <div className={styles.macroLabel}>Burned</div>
+                  <div className={styles.macroValue} style={{ color: '#f87171' }}>{totalBurned}</div>
+                </div>
               </div>
-              <div className={styles.macroItem}>
-                <div className={styles.macroLabel}>Burned</div>
-                <div className={styles.macroValue} style={{ color: '#f87171' }}>{totalBurned}</div>
-              </div>
-              <div className={styles.macroItem}>
-                <div className={styles.macroLabel}>Remaining</div>
-                <div className={styles.macroValue} style={{ color: '#34d399' }}>{remaining}</div>
-              </div>
-              <div className={styles.macroItem}>
-                <div className={styles.macroLabel}>Protein</div>
-                <div className={styles.macroValue} style={{ color: '#f472b6' }}>{totalProtein}g</div>
-              </div>
-              <div className={styles.macroItem}>
-                <div className={styles.macroLabel}>Carbs</div>
-                <div className={styles.macroValue} style={{ color: '#fbbf24' }}>{totalCarbs}g</div>
-              </div>
-              <div className={styles.macroItem}>
-                <div className={styles.macroLabel}>Fat</div>
-                <div className={styles.macroValue} style={{ color: '#34d399' }}>{totalFat}g</div>
+              <div className={styles.macroRowSecondary}>
+                <div className={styles.macroItem}>
+                  <div className={styles.macroLabel}>Protein</div>
+                  <div className={styles.macroValue} style={{ color: '#f472b6' }}>{totalProtein}g</div>
+                </div>
+                <div className={styles.macroItem}>
+                  <div className={styles.macroLabel}>Carbs</div>
+                  <div className={styles.macroValue} style={{ color: '#fbbf24' }}>{totalCarbs}g</div>
+                </div>
+                <div className={styles.macroItem}>
+                  <div className={styles.macroLabel}>Fat</div>
+                  <div className={styles.macroValue} style={{ color: '#34d399' }}>{totalFat}g</div>
+                </div>
               </div>
             </div>
 
