@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { 
+import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart,
   PieChart, Pie, Cell
 } from 'recharts';
@@ -34,9 +34,9 @@ function getMealTagForHour(h) {
 
 const MEAL_COLORS = {
   Breakfast: '#f59e0b',
-  Lunch:     '#3b82f6',
-  Snack:     '#a78bfa',
-  Dinner:    '#10b981',
+  Lunch: '#3b82f6',
+  Snack: '#a78bfa',
+  Dinner: '#10b981',
 };
 
 // ── Toast Component ──
@@ -110,17 +110,17 @@ export default function Home() {
 
   // Macros
   const totalCalories = log.reduce((s, i) => s + (i.calories || 0), 0);
-  const totalProtein  = log.reduce((s, i) => s + (i.protein  || 0), 0);
-  const totalCarbs    = log.reduce((s, i) => s + (i.carbs    || 0), 0);
-  const totalFat      = log.reduce((s, i) => s + (i.fat      || 0), 0);
-  const remaining     = goal - totalCalories;
-  const progressPct   = Math.min((totalCalories / goal) * 100, 100);
+  const totalProtein = log.reduce((s, i) => s + (i.protein || 0), 0);
+  const totalCarbs = log.reduce((s, i) => s + (i.carbs || 0), 0);
+  const totalFat = log.reduce((s, i) => s + (i.fat || 0), 0);
+  const remaining = goal - totalCalories;
+  const progressPct = Math.min((totalCalories / goal) * 100, 100);
 
   // Pie chart data
   const pieData = [
     { name: 'Protein', value: totalProtein, color: '#f472b6' },
-    { name: 'Carbs',   value: totalCarbs,  color: '#fbbf24' },
-    { name: 'Fat',     value: totalFat,    color: '#34d399' },
+    { name: 'Carbs', value: totalCarbs, color: '#fbbf24' },
+    { name: 'Fat', value: totalFat, color: '#34d399' },
   ].filter(d => d.value > 0);
 
   // Group log by meal
@@ -150,7 +150,7 @@ export default function Home() {
       saveLogForDate(viewDate, newLog);
       setFoodInput('');
       setWeekly(getWeeklyData().reverse());
-      
+
       showToast(`✅ ${data.entries.length} item(s) logged via ${data.provider}!`);
     } catch (err) {
       showToast(`❌ ${err.message}`, 'error');
@@ -259,12 +259,12 @@ export default function Home() {
       {showIosTip && (
         <div className={styles.iosTip}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <span style={{ fontWeight: 600 }}>💡 Add to Home Screen</span>
+            <span style={{ fontWeight: 600 }}>To use it as Application</span>
             <button onClick={() => setShowIosTip(false)} className={styles.iosTipClose}>✕</button>
           </div>
           <div className={styles.iosTipContent}>
-            1. Open in <b>Safari</b><br/>
-            2. Tap <b>"Share"</b> (square icon at bottom)<br/>
+            1. Open in <b>Safari</b><br />
+            2. Tap <b>"Share"</b> (square icon at bottom)<br />
             3. Tap <b>"Add to Home Screen"</b>
           </div>
         </div>
@@ -470,8 +470,8 @@ export default function Home() {
                   <AreaChart data={weekly} margin={{ top: 10, right: 0, left: -25, bottom: 0 }}>
                     <defs>
                       <linearGradient id="colorCal" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
