@@ -1,7 +1,7 @@
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem;
   animation: fadeIn 0.5s ease;
 }
 
@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .title {
@@ -33,24 +33,35 @@
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
 }
 
 .sectionTitle {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #a78bfa;
-  margin-bottom: 1.5rem;
-  margin-top: 1rem;
+  margin-bottom: 0.8rem;
+  margin-top: 0.2rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.field {
+  flex: 1;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 @media (max-width: 600px) {
@@ -83,10 +94,10 @@
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   color: var(--text-main);
-  padding: 0.8rem;
-  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   width: 100%;
 }
 
@@ -112,6 +123,10 @@
 .calcBtn:hover {
   background: var(--button-hover);
   transform: translateY(-2px);
+}
+
+.defaultValue {
+  color: #94a3b8 !important; /* Light grey for system suggestions */
 }
 
 .resultBox {

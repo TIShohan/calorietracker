@@ -7,9 +7,9 @@ import { getUserProfile, saveUserProfile, saveCalorieGoal, getCalorieGoal, getWa
 
 function SettingsContent() {
   const router = useRouter();
-  
+
   const [profile, setProfile] = useState({
-    age: 25,
+    age: 27,
     gender: 'male',
     heightFt: 5,
     heightIn: 8,
@@ -41,16 +41,16 @@ function SettingsContent() {
     const { name, value } = e.target;
     setProfile(prev => ({
       ...prev,
-      [name]: ["gender", "goalType"].includes(name) ? value : Number(value)
+      [name]: ["gender", "goalType"].includes(name) ? value : (value === '' ? '' : Number(value))
     }));
   };
 
   const calculateGoal = () => {
     const { age, gender, heightFt, heightIn, weight, activity, goalType, targetWeight, targetWeeks } = profile;
-    
+
     // Height in cm
     const heightCm = ((heightFt * 12) + heightIn) * 2.54;
-    
+
     // BMR (Mifflin-St Jeor)
     let bmr = (10 * weight) + (6.25 * heightCm) - (5 * age);
     bmr += gender === 'male' ? 5 : -161;
@@ -64,7 +64,7 @@ function SettingsContent() {
       const weightDiff = Math.abs(weight - targetWeight);
       const totalKcalRequired = weightDiff * 7700; // ~7700 kcal per kg of fat
       const dailyChangeInfo = totalKcalRequired / (targetWeeks * 7);
-      
+
       if (goalType === 'lose') {
         dailyGoal = tdee - dailyChangeInfo;
       } else if (goalType === 'gain') {
@@ -73,7 +73,7 @@ function SettingsContent() {
     }
 
     // Safety clamps (don't recommend insane goals)
-    dailyGoal = Math.max(1200, Math.round(dailyGoal)); 
+    dailyGoal = Math.max(1200, Math.round(dailyGoal));
 
     setCalculatedGoal(dailyGoal);
   };
@@ -105,7 +105,7 @@ function SettingsContent() {
         <div className={styles.grid}>
           <div className={styles.field}>
             <label>Age</label>
-            <input type="number" name="age" value={profile.age} onChange={handleChange} min="10" max="100"/>
+            <input type="number" name="age" value={profile.age} onChange={handleChange} />
           </div>
           <div className={styles.field}>
             <label>Gender</label>
@@ -117,13 +117,13 @@ function SettingsContent() {
           <div className={styles.field}>
             <label>Height (ft/in)</label>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input type="number" name="heightFt" value={profile.heightFt} onChange={handleChange} min="3" max="8"/>
-              <input type="number" name="heightIn" value={profile.heightIn} onChange={handleChange} min="0" max="11"/>
+              <input type="number" name="heightFt" value={profile.heightFt} onChange={handleChange} />
+              <input type="number" name="heightIn" value={profile.heightIn} onChange={handleChange} />
             </div>
           </div>
           <div className={styles.field}>
             <label>Weight (kg)</label>
-            <input type="number" name="weight" value={profile.weight} onChange={handleChange} min="30" max="300" step="0.1"/>
+            <input type="number" name="weight" value={profile.weight} onChange={handleChange} />
           </div>
         </div>
 
@@ -153,11 +153,11 @@ function SettingsContent() {
           <div className={styles.grid} style={{ marginTop: '1rem' }}>
             <div className={styles.field}>
               <label>Target Weight (kg)</label>
-              <input type="number" name="targetWeight" value={profile.targetWeight} onChange={handleChange} min="30" max="300" step="0.1"/>
+              <input type="number" name="targetWeight" value={profile.targetWeight} onChange={handleChange} />
             </div>
             <div className={styles.field}>
               <label>Target Timeframe (Weeks)</label>
-              <input type="number" name="targetWeeks" value={profile.targetWeeks} onChange={handleChange} min="1" max="150"/>
+              <input type="number" name="targetWeeks" value={profile.targetWeeks} onChange={handleChange} />
             </div>
           </div>
         )}
@@ -177,12 +177,12 @@ function SettingsContent() {
         <div className={styles.sectionTitle} style={{ marginTop: '2rem' }}>App Preferences</div>
         <div className={styles.grid}>
           <div className={styles.field}>
-            <label>Custom Daily Kcal Goal</label>
-            <input type="number" value={customGoal} onChange={(e) => setCustomGoal(Number(e.target.value))} min="500" max="10000"/>
+            <label>Kcal Goal</label>
+            <input type="number" value={customGoal} onChange={(e) => setCustomGoal(e.target.value === '' ? '' : Number(e.target.value))} />
           </div>
           <div className={styles.field}>
-            <label>Daily Water Goal (glasses)</label>
-            <input type="number" value={waterGoal} onChange={(e) => setWaterGoal(Number(e.target.value))} min="1" max="30"/>
+            <label>Water (glass)</label>
+            <input type="number" value={waterGoal} onChange={(e) => setWaterGoal(e.target.value === '' ? '' : Number(e.target.value))} />
           </div>
         </div>
 
