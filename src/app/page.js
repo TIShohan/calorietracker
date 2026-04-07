@@ -127,11 +127,11 @@ export default function Home() {
   // Macros & Exercise
   const totalConsumed = log.filter(i => i.type !== 'exercise').reduce((s, i) => s + (i.calories || 0), 0);
   const totalBurned = log.filter(i => i.type === 'exercise').reduce((s, i) => s + (i.calories || 0), 0);
-  
+
   const totalProtein = log.reduce((s, i) => s + (i.protein || 0), 0);
   const totalCarbs = log.reduce((s, i) => s + (i.carbs || 0), 0);
   const totalFat = log.reduce((s, i) => s + (i.fat || 0), 0);
-  
+
   const remaining = goal - totalConsumed + totalBurned;
   const progressPct = Math.min((totalConsumed / (goal + totalBurned)) * 100, 100);
 
@@ -380,18 +380,18 @@ export default function Home() {
           {/* Food Input (only for today) */}
           {isToday && (
             <div className={styles.card} style={{ marginBottom: '2rem' }}>
-              <form className={styles.form} onSubmit={handleLogFood}>
+              <form className={styles.inputArea} onSubmit={handleLogFood}>
                 <textarea
                   ref={textareaRef}
-                  className={styles.input}
+                  className={styles.msgInput}
                   placeholder="e.g., I had 2 scrambled eggs, a toast and a coffee"
                   value={foodInput}
                   onChange={(e) => setFoodInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   disabled={loading}
                 />
-                <button type="submit" className={styles.button} disabled={loading || !foodInput.trim()}>
-                  {loading ? 'Parsing...' : '✨ Track'}
+                <button type="submit" className={styles.buttonTrack} disabled={loading || !foodInput.trim()}>
+                  {loading ? 'Parsing...' : ' Track '}
                 </button>
               </form>
 

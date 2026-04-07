@@ -24,6 +24,8 @@
 5.  **Messenger-Style Coaching** — A dedicated Chat interface with a professional, icon-based "Send" system, full conversation history (memory), and personalized goal context.
 6.  **Grams-Level Precision** — AI is instructed to provide all food quantities in grams (g) for maximum tracking accuracy.
 7.  **Native Look & Feel** — Disabled "web-like" behaviors (text selection, tap highlights) to ensure a high-end, native app sensation on touch devices.
+8.  **Professional Input System** — Upgraded from single-line fields to auto-expanding textareas with `useLayoutEffect` for seamless multi-line support without horizontal scrolling.
+9.  **Action-Oriented Dashboard** — Redesigned input area with a prominent "Track" button positioned below the input for a cleaner, vertical mobile-first hierarchy.
 
 ## File Structure
 
